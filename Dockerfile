@@ -17,8 +17,8 @@ RUN apt update -q && \
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
     gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg \
     > /dev/null
-RUN AZ_REPO=$(lsb_release -cs) echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-    tee /etc/apt/sources.list.d/azure-cli.list
+RUN AZ_REPO=$(lsb_release -cs) && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 RUN apt update -q && DEBIAN_FRONTEND=noninteractive apt install -qy azure-cli && \
     rm -rf /var/lib/apt/lists/* && \
     echo "CORRA DevOps - Azure CLI Installed"
